@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <Windows.h>
 
 using namespace std;
@@ -13,7 +13,8 @@ struct Games {
     int x = 2, y = 2;
     //Рандом для бомб і баллів
     int rand_1 = 0, rand_2 = 0;
-
+    int a = 0;
+    int x_bot = 2, y_bot = 2;
 
 }game;
 
@@ -43,11 +44,11 @@ int main()
     
     //Создає бомби
     for (int i = 0; i < 10; i++) {
-        game.rand_1 = 1 + rand() % 19;//COL
-        game.rand_2 = 1 + rand() % 29;//ROW
+        game.rand_1 = rand() % 17 + 2;//COL
+        game.rand_2 = rand() % 27 + 2;//ROW
         if (game.x == game.rand_1 && game.y == game.rand_2) {
-            game.rand_1 = 1 + rand() % 19;//COL
-            game.rand_2 = 1 + rand() % 29;//ROW
+            game.rand_1 = rand() % 17 + 2;//COL
+            game.rand_2 = rand() % 27 + 2;//ROW
         }
         arr[game.rand_1][game.rand_2] = '*';// '*'  бомби
 
@@ -56,11 +57,11 @@ int main()
 
     //Создає очки
     for (int i = 0; i < 15; i++) {
-        game.rand_1 = 1 + rand() % 19;//COL
-        game.rand_2 = 1 + rand() % 29;;//ROW
+        game.rand_1 = rand() % 17 + 2;//COL
+        game.rand_2 = rand() % 27 + 2;//ROW
         if (game.x == game.rand_1 && game.y == game.rand_2) {
-            game.rand_1 = 1 + rand() % 19;//COL
-            game.rand_2 = 1 + rand() % 29;;//ROW
+            game.rand_1 = rand() % 17 + 2;//COL
+            game.rand_2 = rand() % 27 + 2;;//ROW
         }
         arr[game.rand_1][game.rand_2] = '+';// '+' балли
 
@@ -89,8 +90,97 @@ int main()
         }
         cin >> game.game;
         
+        if (game.hod % 10 == 0) {
+            //Создає бомби
+            for (int i = 0; i < 10; i++) {
+                game.rand_1 = rand() % 17 + 2;//COL
+                game.rand_2 = rand() % 27 + 2;//ROW
+                if (game.x == game.rand_1 && game.y == game.rand_2) {
+                    game.rand_1 = rand() % 17 + 2;//COL
+                    game.rand_2 = rand() % 27 + 2;//ROW
+                }
+                arr[game.rand_1][game.rand_2] = '*';// '*'  бомби
 
+            }
+
+            //Создає очки
+            for (int i = 0; i < 10; i++) {
+                game.rand_1 = rand() % 17 + 2;//COL
+                game.rand_2 = rand() % 27 + 2;//ROW
+                if (game.x == game.rand_1 && game.y == game.rand_2) {
+                    game.rand_1 = rand() % 17 + 2;//COL
+                    game.rand_2 = rand() % 27 + 2;//ROW
+                }
+                arr[game.rand_1][game.rand_2] = '+';// '*'  бомби
+
+            }
+        }
        
+
+        game.a = 1 + rand() % 5;
+
+        switch (game.a)
+        {
+        case 1:
+
+            arr[game.x_bot][game.y_bot] = '2';
+            game.x_bot -= 1;
+            // Бар'єр # == 35
+            if (int(arr[game.x_bot][game.y_bot]) == 35) {
+                game.x_bot += 1;
+                arr[game.x_bot][game.y_bot] = '%';
+
+            }
+            else {
+                arr[game.x_bot][game.y_bot] = '%';
+            }
+            break;
+        case 2:
+
+            arr[game.x_bot][game.y_bot] = '2';
+            game.x_bot += 1;
+            // Бар'єр # == 35
+            if (int(arr[game.x_bot][game.y_bot]) == 35) {
+                game.x_bot -= 1;
+                arr[game.x_bot][game.y_bot] = '%';
+
+            }
+            else {
+                arr[game.x_bot][game.y_bot] = '%';
+            }
+            break;
+        case 3:
+
+            arr[game.x_bot][game.y_bot] = '2';
+            game.y_bot -= 1;
+            // Бар'єр # == 35
+            if (int(arr[game.x_bot][game.y_bot]) == 35) {
+                game.y_bot += 1;
+                arr[game.x_bot][game.y_bot] = '%';
+
+            }
+            else {
+                arr[game.x_bot][game.y_bot] = '%';
+            }
+            break;
+        case 4:
+
+            arr[game.x_bot][game.y_bot] = '2';
+            game.y_bot += 1;
+            // Бар'єр # == 35
+            if (int(arr[game.x_bot][game.y_bot]) == 35) {
+                game.y_bot -= 1;
+                arr[game.x_bot][game.y_bot] = '%';
+
+            }
+            else {
+                arr[game.x_bot][game.y_bot] = '%';
+            }
+            break;
+        default:
+            break;
+        }
+
 
         
         // W ідти вперед
