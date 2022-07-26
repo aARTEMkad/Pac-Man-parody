@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <Windows.h>
 
 using namespace std;
@@ -43,11 +43,11 @@ int main()
     
     //Создає бомби
     for (int i = 0; i < 10; i++) {
-        game.rand_1 = 1 + rand() % 19;//COL
-        game.rand_2 = 1 + rand() % 29;//ROW
+        game.rand_1 = rand() % 17 + 2;//COL
+        game.rand_2 = rand() % 27 + 2;//ROW
         if (game.x == game.rand_1 && game.y == game.rand_2) {
-            game.rand_1 = 1 + rand() % 19;//COL
-            game.rand_2 = 1 + rand() % 29;//ROW
+            game.rand_1 = rand() % 17 + 2;//COL
+            game.rand_2 = rand() % 27 + 2;//ROW
         }
         arr[game.rand_1][game.rand_2] = '*';// '*'  бомби
 
@@ -56,11 +56,11 @@ int main()
 
     //Создає очки
     for (int i = 0; i < 15; i++) {
-        game.rand_1 = 1 + rand() % 19;//COL
-        game.rand_2 = 1 + rand() % 29;;//ROW
+        game.rand_1 = rand() % 17 + 2;//COL
+        game.rand_2 = rand() % 27 + 2;//ROW
         if (game.x == game.rand_1 && game.y == game.rand_2) {
-            game.rand_1 = 1 + rand() % 19;//COL
-            game.rand_2 = 1 + rand() % 29;;//ROW
+            game.rand_1 = rand() % 17 + 2;//COL
+            game.rand_2 = rand() % 27 + 2;//ROW
         }
         arr[game.rand_1][game.rand_2] = '+';// '+' балли
 
