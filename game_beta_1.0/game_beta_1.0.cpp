@@ -2,206 +2,321 @@
 #include <Windows.h>
 
 using namespace std;
-struct Games {
-   
-    char game;
-    //Персонаж
-    char pakmen = char(1);
-    //Балли і жизні і кількість ходів
-    int ochki = 0, heart = 3, hod = 0;
-    //Позиція ігрока
-    int x = 2, y = 2;
-    //Рандом для бомб і баллів
-    int rand_1 = 0, rand_2 = 0;
-
-
-}game;
-
 
 int main()
 {
-    setlocale(LC_ALL, "ukr");
     srand(time(NULL));
-    const int COL = 20;
-    const int ROW = 30;
-    char arr[COL][ROW];
+    char game;
+    //Player
+    char pakmen = char(1);
+    //points and heart
+    int points = 0, heart = 3;
+    //position player
+    int x = 2, y = 2;
+    x = rand() % 16 + 1;
+    y = rand() % 18 + 1;
     
-    //Создає карту
-    for (int i = 0; i < COL; i++) {
-        for (int k = 0; k < ROW; k++) {
-            arr[i][0] = '#';
-            arr[i][k] = ' ';
-            arr[0][k] = '#';
-            arr[19][k] = '#';
-            arr[i][29] = '#';
-
-        }
+    int a = 0,d = 0;
+    int x_bot = 5, y_bot = 5;
+    x_bot = rand() % 16 + 1;
+    y_bot = rand() % 18 + 1;
+    const int COL = 17;
+    const int ROW = 19;
+    char arr[COL][ROW] = {
+        {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+        {'#','+','+','+','+','+','+','+','+','+','+','+','+','+','+','+','+','+','#'},
+        {'#','+','#','#','+','#','+','#','#','#','#','#','+','#','+','#','#','+','#'},
+        {'#','+','+','+','+','#','+','+','+','#','+','+','+','#','+','+','+','+','#'},
+        {'#','#','#','#','+','#','#','#','+','#','+','#','#','#','+','#','#','#','#'},
+        {'#','#','#','#','+','#','+','+','+','+','+','+','+','#','+','#','#','#','#'},
+        {'#','#','#','#','+','#','+','#','#',' ','#','#','+','#','+','#','#','#','#'},
+        {'+','+','+','+','+','+','+','#',' ',' ',' ','#','+','+','+','+','+','+','+'},
+        {'#','#','#','#','+','#','+','#','#','#','#','#','+','#','+','#','#','#','#'},
+        {'#','#','#','#','+','#','+','+','+','+','+','+','+','#','+','#','#','#','#'},
+        {'#','#','#','#','+','#','+','#','#','#','#','#','+','#','+','#','#','#','#'},
+        {'#','+','+','+','+','+','+','+','+','#','+','+','+','+','+','+','+','+','#'},
+        {'#','+','#','#','+','#','#','#','+','#','+','#','#','#','+','#','#','+','#'},
+        {'#','+','+','#','+','+','+','+','+','+','+','+','+','+','+','#','+','+','#'},
+        {'#','#','+','#','+','#','+','#','#','#','#','#','+','#','+','#','+','#','#'},
+        {'#','+','+','+','+','#','+','+','+','#','+','+','+','#','+','+','+','+','#'},
+        {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
+    };
+    for (; int(arr[x][y]) == 35;) {
+        x = rand() % 16 + 1;
+        y = rand() % 18 + 1;
     }
-
-
-   
+    for (; int(arr[x_bot][y_bot]) == 35;) {
+        x_bot = rand() % 16 + 1;
+        y_bot = rand() % 18 + 1;
+    }
+    arr[x][y] = pakmen;
+    arr[x_bot][y_bot] = '%';
     
-    //Создає бомби
-    for (int i = 0; i < 10; i++) {
-        game.rand_1 = rand() % 17 + 2;//COL
-        game.rand_2 = rand() % 27 + 2;//ROW
-        if (game.x == game.rand_1 && game.y == game.rand_2) {
-            game.rand_1 = rand() % 17 + 2;//COL
-            game.rand_2 = rand() % 27 + 2;//ROW
-        }
-        arr[game.rand_1][game.rand_2] = '*';// '*'  бомби
-
-    }
-
-
-    //Создає очки
-    for (int i = 0; i < 15; i++) {
-        game.rand_1 = rand() % 17 + 2;//COL
-        game.rand_2 = rand() % 27 + 2;//ROW
-        if (game.x == game.rand_1 && game.y == game.rand_2) {
-            game.rand_1 = rand() % 17 + 2;//COL
-            game.rand_2 = rand() % 27 + 2;//ROW
-        }
-        arr[game.rand_1][game.rand_2] = '+';// '+' балли
-
-    }
-    arr[game.x][game.y] = game.pakmen;
     
-
-
-    //Керування 
-    for (int game_1 = 0; game_1 < 10000; game_1++) {
+    //management
+    for (int game_1 = 0; game_1 < 1000000; game_1++) {
         system("cls");
-        cout << "Балли - " << game.ochki << " Жизнi - " << game.heart << " Крокiв - " << game.hod;
+        
+        cout << "Points - " << points << " Heart - " << heart;
         for (int i = 0; i < COL; i++) {
             cout << "\n";
             for (int k = 0; k < ROW; k++) {
-                cout << "|";
+                cout << " ";
                 cout << arr[i][k];
             }
-            cout << "|";
+            cout << " ";
         }
-        //Провірка жизні
-        if (game.heart < 1) {
+        Sleep(750);
+        //audit vital
+        if (heart < 1) {
+            system("cls");
             cout << "\nGame Over\n";
-            cout << "Балли - " << game.ochki  << "\nКрокiв - " << game.hod;
+            cout << "Point - " << points;
             return 0;
         }
-        cin >> game.game;
-        
+        //audit points
+        if (points == 5000) {
+            for (int i = 0; i < 100; i++) {
+                Sleep(750);
+                system("cls");
+                d = rand() % 6 + 1;
+                switch (d)
+                {
+                case 1:
+                    system("color 1");
+                    break;
+                case 2:
+                    system("color 2");
+                    break;
+                case 3:
+                    system("color 3");
+                    break;
+                case 4:
+                    system("color 4");
+                    break;
+                case 5:
+                    system("color 5");
+                    break;
+                case 6:
+                    system("color 6");
+                    break;
+                default:
+                    break;
+                }
+                cout << " ____    __       ___                 _    _       __      _____       " << endl;
+                cout << "( _  \\  / _\\     / __)    _____      / \\__/ \\     / _\\    /  _  \\  " << endl;
+                cout << " ) __/ /    \\   ( (__    |_____|    /  ____  \\   /    \\  /  / \\  \\" << endl;
+                cout << "(__)   \\_/\\_/    \\___)             /__/    \\__\\  \\_/\\_/  |__| |__|" << endl;
+            }
+        }
+        //--------------------------BOT--------------------------
 
+        nazad:
+
+        a = 1 + rand() % 4;
+
+        switch (a)
+        {
+        case 1:
+
+            arr[x_bot][y_bot] = '+';
+            x_bot -= 1;
+            // barrier # == 35
+            if (int(arr[x_bot][y_bot]) == 35) {
+                x_bot += 1;
+                arr[x_bot][y_bot] = '%';
+                goto nazad;
+
+            }
+            if (int(arr[x_bot][y_bot]) == pakmen) {
+                heart--;
+
+
+            }
+            else {
+                arr[x_bot][y_bot] = '%';
+            }
+            break;
+        case 2:
+
+            arr[x_bot][y_bot] = '+';
+            x_bot += 1;
+            //barrier # == 35
+            if (int(arr[x_bot][y_bot]) == 35) {
+                x_bot -= 1;
+                arr[x_bot][y_bot] = '%';
+                goto nazad;
+
+            }
+            if (int(arr[x_bot][y_bot]) == pakmen) {
+                heart--;
+
+
+            }
+            else {
+                arr[x_bot][y_bot] = '%';
+            }
+            break;
+        case 3:
+
+            arr[x_bot][y_bot] = '+';
+            y_bot -= 1;
+            //barrier # == 35
+            if (int(arr[x_bot][y_bot]) == 35) {
+                y_bot += 1;
+                arr[x_bot][y_bot] = '%';
+                goto nazad;
+
+            }
+            if (int(arr[x_bot][y_bot]) == pakmen) {
+                heart--;
+
+
+            }
+            else {
+                arr[x_bot][y_bot] = '%';
+            }
+            break;
+        case 4:
+
+            arr[x_bot][y_bot] = '+';
+            y_bot += 1;
+            //barrier # == 35
+            if (int(arr[x_bot][y_bot]) == 35) {
+                y_bot -= 1;
+                arr[x_bot][y_bot] = '%';
+                goto nazad;
+
+            }
+            if (int(arr[x_bot][y_bot]) == pakmen) {
+                heart--;
+
+
+            }
+            else {
+                arr[x_bot][y_bot] = '%';
+            }
+            break;
+        }
+        //----------------------------------------Player---------------------------------
+        
+        cin >> game;
+        
+        // W go forward
+        if (int(game) == 119 || int(game) == 87) {
+            arr[x][y] = ' ';
+            x -= 1;
+            // Barrier # == 35
+            if (int(arr[x][y]) == 35) {
+                x += 1;
+                arr[x][y] = pakmen;
+            }
+            // + == 43 points
+            if (int(arr[x][y]) == 43) {
+                points++;
+                arr[x][y] = pakmen;
+                 
+            }
+            // @ == 37 Bot
+            if (int(arr[x][y]) == 37) {
+                heart--;
+               
+                 
+            }
+            else {
+                arr[x][y] = pakmen;
+                 
+            }
+
+
+        }
+
+        // S go back
+        else if (int(game) == 83 || int(game) == 115) {
+            arr[x][y] = ' ';
+            x += 1;
+            // Barrier # == 35
+            if (int(arr[x][y]) == 35) {
+                x -= 1;
+                arr[x][y] = pakmen;
+            }
+            // + == 43 points
+            if (int(arr[x][y]) == 43) {
+                points++;
+                arr[x][y] = pakmen;
+                 
+            }
+            // @ == 37 Bot
+            if (int(arr[x][y]) == 37) {
+                heart--;
+              
+                 
+            }
+            else {
+                arr[x][y] = pakmen;
+                 
+            }
+
+        }
+        // A go left
+        else if (int(game) == 97 || int(game) == 65) {
+            arr[x][y] = ' ';
+            y -= 1;
+            // Barrier # == 35
+            if (int(arr[x][y]) == 35) {
+                y += 1;
+                arr[x][y] = pakmen;
+            }
+            // + == 43 points
+            if (int(arr[x][y]) == 43) {
+                points++;
+                arr[x][y] = pakmen;
+                 
+            }
+            // @ == 37 Bot
+            if (int(arr[x][y]) == 37) {
+                heart--;
+              
+                 
+            }
+            else {
+                arr[x][y] = pakmen;
+                 
+            }
+        }
+        // D go right
+        else if (int(game) == 100 || int(game) == 68) {
+            arr[x][y] = ' ';
+            y += 1;
+            // Barrier # == 35
+            if (int(arr[x][y]) == 35) {
+                y -= 1;
+                arr[x][y] = pakmen;
+            }
+            // + == 43 points
+            if (int(arr[x][y]) == 43) {
+                points++;
+                arr[x][y] = pakmen;
+                 
+            }
+            // @ == 37 Bot
+            if (int(arr[x][y]) == 37) {
+                heart--;
+              
+                 
+            }
+            else {
+                arr[x][y] = pakmen;
+                 
+
+            }
+        }
+        
        
 
+
         
-        // W ідти вперед
-        if (int(game.game) == 119 || int(game.game) == 87) {
-            arr[game.x][game.y] = ' ';
-            game.x -= 1;
-            // Бар'єр # == 35
-            if (int(arr[game.x][game.y]) == 35) {
-                game.x += 1;
-                arr[game.x][game.y] = game.pakmen;
-            }
-            // + == 43 очки
-            if (int(arr[game.x][game.y]) == 43) {
-                game.ochki++;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            // * == 42 бомби
-            if (int(arr[game.x][game.y]) == 42) {
-                game.heart--;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            else {
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-
-          
-        }
-     
-        // S ідти назад
-        else if (int(game.game) == 83 || int(game.game) == 115) {
-            arr[game.x][game.y] = ' ';
-            game.x += 1;
-            // Бар'єр # == 35
-            if (int(arr[game.x][game.y]) == 35) {
-                game.x -= 1;
-                arr[game.x][game.y] = game.pakmen;
-            }
-            // + == 43 очки
-            if (int(arr[game.x][game.y]) == 43) {
-                game.ochki++;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            // * == 42 бомби
-            if (int(arr[game.x][game.y]) == 42) {
-                game.heart--;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            else {
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-
-        }
-        // A ідти вліво
-        else if (int(game.game) == 97 || int(game.game) == 65) {
-            arr[game.x][game.y] = ' ';
-            game.y -= 1;
-            // Бар'єр # == 35
-            if (int(arr[game.x][game.y]) == 35) {
-                game.y += 1;
-                arr[game.x][game.y] = game.pakmen;
-            }
-            // + == 43 очки
-            if (int(arr[game.x][game.y]) == 43) {
-                game.ochki++;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            // * == 42 бомби
-            if (int(arr[game.x][game.y]) == 42) {
-                game.heart--;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            else {
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-        }
-        // D ідти вправо
-        else if (int(game.game) == 100 || int(game.game) == 68) {
-            arr[game.x][game.y] = ' ';
-            game.y += 1;
-            // Бар'єр # == 35
-            if (int(arr[game.x][game.y]) == 35) {
-                game.y -= 1;
-                arr[game.x][game.y] = game.pakmen;
-            }
-            // + == 43 очки
-            if (int(arr[game.x][game.y]) == 43) {
-                game.ochki++;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            // * == 42 бомби
-            if (int(arr[game.x][game.y]) == 42) {
-                game.heart--;
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-            }
-            else {
-                arr[game.x][game.y] = game.pakmen;
-                game.hod++;
-
-            }
-        }
+        
 
     }
 
@@ -211,7 +326,7 @@ int main()
   //W = 87 S = 83 A = 65 D = 68
 
 
-        //Каджі 10 кроків спавнить додаткові міни і очки
+        //Каджі 10 кроків спавнить додаткові міни і points
         /*if (game.hod % 10 == 0) {
             for (int i = 0; i < 5; i++) {
                 game.rand_1 = 1 + rand() % 4;
@@ -225,7 +340,7 @@ int main()
             }
 
 
-            //Создає очки
+            //Создає points
             for (int i = 0; i < 3; i++) {
                 game.rand_1 = 1 + rand() % 4;
                 game.rand_2 = 1 + rand() % 8;
@@ -247,48 +362,32 @@ int main()
         if (int(game.game) == 119 || int(game.game) == 87) {
             arr[game.x][game.y] = ' ';
             game.x -= 1;
-            // Бар'єр # == 35
+            // Barrier # == 35
             if (int(arr[game.x][game.y]) == 35) {
                 game.x += 1;
                 arr[game.x][game.y] = game.pakmen;
             }
-            // + == 43 очки
+            // + == 43 points
             if (int(arr[game.x][game.y]) == 43) {
-                game.ochki++;
+                game.points++;
                 arr[game.x][game.y] = game.pakmen;
-                game.hod++;
+                game. 
             }
-            // * == 42 бомби
-            if (int(arr[game.x][game.y]) == 42) {
+            // * == 37 Bot
+            if (int(arr[game.x][game.y]) == 37) {
                 game.heart--;
                 arr[game.x][game.y] = game.pakmen;
-                game.hod++;
+                game. 
             }
             else {
                 arr[game.x][game.y] = game.pakmen;
-                game.hod++;
+                game. 
             }
 
 
-        }
-         {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+/*
+          ____      __      ___                 __    __
+         (  _ \    / _\    / __)    _____      /  \__/  \
+          ) __/   /    \  ( (__    |_____|    /   ____   \
+         (__)     \_/\_/   \___)             /___/    \___\
 */
