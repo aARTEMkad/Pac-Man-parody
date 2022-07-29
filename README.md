@@ -7,3 +7,5 @@
 beta_1.0 added character management
 
 beta_1.1 added bot and map 
+
+beta_1.2 fix bugs
