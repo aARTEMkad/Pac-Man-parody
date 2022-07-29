@@ -10,7 +10,7 @@ int main()
     //Player
     char pakmen = char(1);
     //points and heart
-    int points = 0, heart = 3;
+    int points = 110, heart = 3;
     //position player
     int x = 2, y = 2;
     x = rand() % 16 + 1;
@@ -56,8 +56,13 @@ int main()
     //management
     for (int game_1 = 0; game_1 < 1000000; game_1++) {
         system("cls");
-        
+        cout << " ____    __       ___                 _    _       __      _____       " << endl;
+        cout << "( _  \\  / _\\     / __)    _____      / \\__/ \\     / _\\    /  _  \\  " << endl;
+        cout << " ) __/ /    \\   ( (__    |_____|    /  ____  \\   /    \\  /  / \\  \\" << endl;
+        cout << "(__)   \\_/\\_/    \\___)             /__/    \\__\\  \\_/\\_/  |__| |__|" << endl;
+
         cout << "Points - " << points << " Heart - " << heart;
+        //Spawn map
         for (int i = 0; i < COL; i++) {
             cout << "\n";
             for (int k = 0; k < ROW; k++) {
@@ -66,7 +71,7 @@ int main()
             }
             cout << " ";
         }
-        Sleep(750);
+       
         //audit vital
         if (heart < 1) {
             system("cls");
@@ -75,7 +80,7 @@ int main()
             return 0;
         }
         //audit points
-        if (points == 5000) {
+        if (points == 120) {
             for (int i = 0; i < 100; i++) {
                 Sleep(750);
                 system("cls");
@@ -230,7 +235,6 @@ int main()
 
 
         }
-
         // S go back
         else if (int(game) == 83 || int(game) == 115) {
             arr[x][y] = ' ';
@@ -390,4 +394,12 @@ int main()
          (  _ \    / _\    / __)    _____      /  \__/  \
           ) __/   /    \  ( (__    |_____|    /   ____   \
          (__)     \_/\_/   \___)             /___/    \___\
+*/
+/*
+
+
+                ____    __      ___                 _    _       __      _____     
+               ( _  \  / _\    / __)    _____      / \__/ \     / _\    /  _  \  
+                ) __/ /    \  ( (__    |_____|    /  ____  \   /    \  /  / \  \
+               (__)   \_/\_/   \___)             /__/    \__\  \_/\_/  |__| |__|
 */
