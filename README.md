@@ -3,7 +3,17 @@
     ( _  \   / _\    / __)    _____      / \__/ \     / _\    /  _  \  
      ) __/  /    \  ( (__    |_____|    /  ____  \   /    \  /  / \  \
     (__)    \_/\_/   \___)             /__/    \__\  \_/\_/  |__| |__|
-   
+# using the library
+```c++
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <conio.h>
+```
+
+
+
+
 #Beta 
 
 V1.0 added character management
