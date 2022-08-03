@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <conio.h>
 #include <thread>
@@ -27,6 +26,8 @@ struct prog {
     int d = 0, a = 0;
 
     int x_bot = 5, y_bot = 5;
+    int reserve_x_bot = 0, reserve_y_bot = 0;
+    int temp_number = 0;
 
     int rand_number_x, rand_number_y;
 
@@ -36,10 +37,10 @@ struct prog {
         {'#',' ','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#',' ','#'},
         {'#',' ',' ',' ',' ','#',' ','+',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
         {'#','#','#','#','+','#','#','#',' ','#',' ','#','#','#',' ','#','#','#','#'},
-        {'#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
+        {'#','#','#','#',' ','#','+',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
         {'#','#','#','#',' ','#',' ','#','#',' ','#','#',' ','#',' ','#','#','#','#'},
-        {' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ','+',' ',' ',' ',' '},
-        {'#','#','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#','#','#'},
+        {' ',' ',' ',' ','+',' ',' ','#',' ',' ',' ','#',' ',' ','+',' ',' ',' ',' '},
+        {'#','#','#','#',' ','#','+','#','#','#','#','#',' ','#',' ','#','#','#','#'},
         {'#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
         {'#','#','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#','#','#'},
         {'#',' ',' ',' ','+',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
@@ -109,25 +110,33 @@ void Bot_managment() {
 nazad:
 
     Game.a = 1 + rand() % 4;
-
+ 
     switch (Game.a)
     {
     case 1:
 
         Game.arr[Game.x_bot][Game.y_bot] = ' ';
         Game.x_bot -= 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
+        }
         // barrier # == 35
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
             Game.x_bot += 1;
             Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
             goto nazad;
 
         }
-        // Points + == 43
+        // Points + == 43 
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
-            Game.x_bot += 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '+';
-            Game.x_bot -= 1;
+            
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
 
         }
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
@@ -143,11 +152,26 @@ nazad:
 
         Game.arr[Game.x_bot][Game.y_bot] = ' ';
         Game.x_bot += 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
+        }
         //barrier # == 35
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
             Game.x_bot -= 1;
             Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
             goto nazad;
+
+        }
+        // Points + == 43
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
+
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
 
         }
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
@@ -155,13 +179,7 @@ nazad:
 
 
         }
-        // Points + == 43
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
-            Game.x_bot -= 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '+';
-            Game.x_bot += 1;
-
-        }
+       
         else {
             Game.arr[Game.x_bot][Game.y_bot] = '%';
         }
@@ -170,19 +188,26 @@ nazad:
 
         Game.arr[Game.x_bot][Game.y_bot] = ' ';
         Game.y_bot -= 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
+        }
+        
         //barrier # == 35
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
             Game.y_bot += 1;
             Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
             goto nazad;
 
         }
         // Points + == 43
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
-            Game.y_bot += 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '+';
-            Game.y_bot -= 1;
-
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
         }
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
             Game.heart--;
@@ -197,19 +222,26 @@ nazad:
 
         Game.arr[Game.x_bot][Game.y_bot] = ' ';
         Game.y_bot += 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
+        }
+        
         //barrier # == 35
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
             Game.y_bot -= 1;
             Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
             goto nazad;
 
         }
         // Points + == 43
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
-            Game.y_bot -= 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '+';
-            Game.y_bot += 1;
-
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
         }
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
             Game.heart--;
@@ -217,6 +249,7 @@ nazad:
 
         }
         else {
+         
             Game.arr[Game.x_bot][Game.y_bot] = '%';
         }
         break;
@@ -338,91 +371,92 @@ void management(char game) {
 int main()
 {
     srand(time(NULL));
-    
+
     PAC_MAN();
-    
-     for (int i = 1; i >= 0; i--) {
-            for (int j = 0; j < 1; j++) {
-                cout << "\t\t\t" << "    " << Game.menu[i][j] << "    ";
-                cout << endl;
+
+    for (int i = 1; i >= 0; i--) {
+        for (int j = 0; j < 1; j++) {
+            cout << "\t\t\t" << "    " << Game.menu[i][j] << "    ";
+            cout << endl;
+        }
+    }
+
+    for (int menu_1 = 0; menu_1 < 1000; menu_1++) {
+
+
+        Game.symbol = _getch();
+        if (Game.symbol == -32) {
+            Game.symbol = _getch();
+            if ((int)Game.symbol == 72 || (int)Game.symbol == 224) {
+                system("cls");
+                PAC_MAN();
+                Game.temp_1 = 1;
+                cout << "\t\t\t" << "<<< " << Game.menu[Game.temp_1][0] << " >>>" << endl;
+                Game.temp_1--;
+                cout << "\t\t\t" << "    " << Game.menu[Game.temp_1][0] << "    " << endl;
+                Game.result_menu = 0;
+
+
             }
-     }
-     
-     for (int menu_1 = 0; menu_1 < 1000; menu_1++) {
-       
-        
-         Game.symbol = _getch();
-         if (Game.symbol == -32) {
-             Game.symbol = _getch();
-             if ((int)Game.symbol == 72 || (int)Game.symbol == 224) {
-                 system("cls");
-                 PAC_MAN();
-                 Game.temp_1 = 1;
-                 cout << "\t\t\t" << "<<< " << Game.menu[Game.temp_1][0] << " >>>" << endl;
-                 Game.temp_1--;
-                 cout << "\t\t\t" << "    " << Game.menu[Game.temp_1][0] << "    " << endl;
-                 Game.result_menu = 0;
-                 
-
-             }
-             else if ((int)Game.symbol == 80 || (int)Game.symbol == 224) {
-                 system("cls");
-                 PAC_MAN();
-                 Game.temp_1 = 1;
-                 cout << "\t\t\t" << "    " << Game.menu[Game.temp_1][0] << "    " << endl;
-                 Game.temp_1--;
-                 cout << "\t\t\t" << "<<< " << Game.menu[Game.temp_1][0] << " >>>" << endl;
-                 Game.result_menu = 1;
-               
-                
+            else if ((int)Game.symbol == 80 || (int)Game.symbol == 224) {
+                system("cls");
+                PAC_MAN();
+                Game.temp_1 = 1;
+                cout << "\t\t\t" << "    " << Game.menu[Game.temp_1][0] << "    " << endl;
+                Game.temp_1--;
+                cout << "\t\t\t" << "<<< " << Game.menu[Game.temp_1][0] << " >>>" << endl;
+                Game.result_menu = 1;
 
 
-             }
-         }
-        
-         if (Game.symbol == 13) {
-             // Start
-             if (Game.result_menu == 0) {
-                 Game.heart = 3;
-                 Game.points = 0;
-                 for (int i = 0;i != 1;) {
-                     system("cls");
-                     cout << "\tPoints - " << Game.points << " Heart - " << Game.heart;
-                     for (int i = 0; i < 17; i++) {
-                         cout << "\n";
-                         for (int k = 0; k < 19; k++) {
-                             cout << " ";
-                             cout << Game.arr[i][k];
-                         }
-                         cout << " ";
-                     }
-                     if (Game.heart < 1) {
-                         system("cls");
-                         cout << "\nGame Over\n";
-                         cout << "Point - " << Game.points;
-                         cout << "\nPress the up or down arrow\n";
-                         i = 1;
-                     }
-                     audit_points();
-                     Game.game = _getch();
-                     management(Game.game);
-                     Bot_managment();
-                 
-                 }
-                 continue;
-             }
-             // Exit
-             else if (Game.result_menu == 1) {
-                 return 0;
-             }
-             // Problem
-             else {
-                 cout << "\nError\n";
-             }
-         }
-       
-         
-     }
 
-  
+
+            }
+        }
+
+        if (Game.symbol == 13) {
+            // Start
+            if (Game.result_menu == 0) {
+                Game.heart = 3;
+                Game.points = 0;
+                for (int i = 0; i != 1;) {
+                    system("cls");
+                    cout << "TEMP NUMBER :: " << Game.temp_number << endl;
+                    cout << "\tPoints - " << Game.points << " Heart - " << Game.heart;
+                    for (int i = 0; i < 17; i++) {
+                        cout << "\n";
+                        for (int k = 0; k < 19; k++) {
+                            cout << " ";
+                            cout << Game.arr[i][k];
+                        }
+                        cout << " ";
+                    }
+                    if (Game.heart < 1) {
+                        system("cls");
+                        cout << "\nGame Over\n";
+                        cout << "Point - " << Game.points;
+                        cout << "\nPress the up or down arrow\n";
+                        i = 1;
+                    }
+                    audit_points();
+                    Game.game = _getch();
+                    management(Game.game);
+                    Bot_managment();
+
+                }
+                continue;
+            }
+            // Exit
+            else if (Game.result_menu == 1) {
+                return 0;
+            }
+            // Problem
+            else {
+                cout << "\nError\n";
+            }
+        }
+
+
+    }
+
+
 }
