@@ -56,11 +56,12 @@ struct prog {
 
 void audit_points() {
     //audit points
+    Game.d = 1;
     if (Game.points == 120) {
         for (int i = 0; i < 100; i++) {
             this_thread::sleep_for(chrono::milliseconds(750));
             system("cls");
-            Game.d = 1;
+            
             switch (Game.d)
             {
             case 1:
