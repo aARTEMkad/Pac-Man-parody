@@ -22,7 +22,7 @@ struct prog {
     //points and heart
     int points = 0, heart = 3;
     //position players
-    int x = 2, y = 2;
+    int x = 2, y = 1;
     int d = 0, a = 0;
 
     int x_bot = 5, y_bot = 5;
@@ -370,8 +370,9 @@ void management(char game) {
 
 int main()
 {
+    
     srand(time(NULL));
-
+    system("mode con cols=71 lines=25");
     PAC_MAN();
 
     for (int i = 1; i >= 0; i--) {
@@ -420,10 +421,10 @@ int main()
                 Game.points = 0;
                 for (int i = 0; i != 1;) {
                     system("cls");
-                    cout << "TEMP NUMBER :: " << Game.temp_number << endl;
-                    cout << "\tPoints - " << Game.points << " Heart - " << Game.heart;
+                    
+                    cout << "\t\t\tPoints - " << Game.points << " Heart - " << Game.heart;
                     for (int i = 0; i < 17; i++) {
-                        cout << "\n";
+                        cout << "\n\t\t";
                         for (int k = 0; k < 19; k++) {
                             cout << " ";
                             cout << Game.arr[i][k];
