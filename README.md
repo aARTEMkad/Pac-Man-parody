@@ -31,3 +31,5 @@ V1.4 added how many points he wants on the player map and a new category in the 
 V2.0 has completely updated the menu, fixed all the bugs in the code without a single "goto", everything is designed much better than before, and it's definitely not a beta version anymore
 
 V2.1 Fix bugs
+
+V2.2 Updated character management, more like the official game, added more comments that are responsible for more detailed information
