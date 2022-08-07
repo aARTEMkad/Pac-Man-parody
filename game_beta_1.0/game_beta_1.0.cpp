@@ -17,6 +17,7 @@ struct prog {
         {"Start"},
     };
     char game;
+    char temp_but;
     //Player
     char pakmen = char(2);
     //points and heart
@@ -61,7 +62,7 @@ void audit_points() {
         for (int i = 0; i < 100; i++) {
             this_thread::sleep_for(chrono::milliseconds(750));
             system("cls");
-            
+
             switch (Game.d)
             {
             case 1:
@@ -111,7 +112,7 @@ void Bot_managment() {
 nazad:
 
     Game.a = 1 + rand() % 4;
- 
+
     switch (Game.a)
     {
     case 1:
@@ -134,7 +135,7 @@ nazad:
         }
         // Points + == 43 
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
-            
+
             Game.reserve_x_bot = Game.x_bot;
             Game.reserve_y_bot = Game.y_bot;
             Game.temp_number = 1;
@@ -180,7 +181,7 @@ nazad:
 
 
         }
-       
+
         else {
             Game.arr[Game.x_bot][Game.y_bot] = '%';
         }
@@ -193,7 +194,7 @@ nazad:
             Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
             Game.temp_number = 0;
         }
-        
+
         //barrier # == 35
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
             Game.y_bot += 1;
@@ -227,7 +228,7 @@ nazad:
             Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
             Game.temp_number = 0;
         }
-        
+
         //barrier # == 35
         if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
             Game.y_bot -= 1;
@@ -250,7 +251,7 @@ nazad:
 
         }
         else {
-         
+
             Game.arr[Game.x_bot][Game.y_bot] = '%';
         }
         break;
@@ -259,7 +260,7 @@ nazad:
 
 void management(char game) {
     // W go forward
-    if (int(game) == 119 || int(game) == 87) {
+    if (game == 'W' || game == 'w') {
         Game.arr[Game.x][Game.y] = ' ';
         Game.x -= 1;
         // Barrier # == 35
@@ -287,7 +288,7 @@ void management(char game) {
 
     }
     // S go back
-    else if (int(game) == 83 || int(game) == 115) {
+    else if (game == 's' || game == 'S') {
         Game.arr[Game.x][Game.y] = ' ';
         Game.x += 1;
         // Barrier # == 35
@@ -314,7 +315,7 @@ void management(char game) {
 
     }
     // A go left
-    else if (int(game) == 97 || int(game) == 65) {
+    else if (game == 'a' || game == 'A') {
         Game.arr[Game.x][Game.y] = ' ';
         Game.y -= 1;
         // Barrier # == 35
@@ -340,7 +341,7 @@ void management(char game) {
         }
     }
     // D go right
-    else if (int(game) == 100 || int(game) == 68) {
+    else if (game == 'd' || game == 'D') {
         Game.arr[Game.x][Game.y] = ' ';
         Game.y += 1;
         // Barrier # == 35
@@ -371,19 +372,18 @@ void management(char game) {
 
 int main()
 {
-    
+
     srand(time(NULL));
     system("mode con cols=71 lines=25");
     PAC_MAN();
-
     for (int i = 1; i >= 0; i--) {
         for (int j = 0; j < 1; j++) {
             cout << "\t\t\t" << "    " << Game.menu[i][j] << "    ";
             cout << endl;
         }
     }
-
-    for (int menu_1 = 0; menu_1 < 1000; menu_1++) {
+    // Menu
+    for (;;) {
 
 
         Game.symbol = _getch();
@@ -418,12 +418,27 @@ int main()
         if (Game.symbol == 13) {
             // Start
             if (Game.result_menu == 0) {
+                // Standart values
                 Game.heart = 3;
                 Game.points = 0;
+                // Getting the first symbol to walk the character
+                system("cls");
+                cout << "\t\t\tPoints - " << Game.points << " Heart - " << Game.heart;
+                for (int i = 0; i < 17; i++) {
+                    cout << "\n\t\t";
+                    for (int k = 0; k < 19; k++) {
+                        cout << " ";
+                        cout << Game.arr[i][k];
+                    }
+                    cout << " ";
+                }
+                Game.game = _getch();
+                // Start of the main game
                 for (int i = 0; i != 1;) {
                     system("cls");
-                    
+                    audit_points();
                     cout << "\t\t\tPoints - " << Game.points << " Heart - " << Game.heart;
+                    // Spawn the map
                     for (int i = 0; i < 17; i++) {
                         cout << "\n\t\t";
                         for (int k = 0; k < 19; k++) {
@@ -432,6 +447,7 @@ int main()
                         }
                         cout << " ";
                     }
+                    // Checks vitals
                     if (Game.heart < 1) {
                         system("cls");
                         cout << "\nGame Over\n";
@@ -439,9 +455,50 @@ int main()
                         cout << "\nPress the up or down arrow\n";
                         i = 1;
                     }
-                    audit_points();
-                    Game.game = _getch();
-                    management(Game.game);
+                    // Saves the value that will be changed later
+                    Game.temp_but = Game.game;
+                    // Checks if the user has pressed another button
+                    if (_kbhit()) {
+                        Game.game = _getch();
+                        if (int(Game.game) == 119 || int(Game.game) == 87) {
+                            Game.x -= 1;
+                            if (int(Game.arr[Game.x][Game.y]) == 35) { // If the new value = barrier, then it takes the previous value
+                                Game.game = Game.temp_but;
+                            }
+                            Game.x += 1;
+                        }
+                        // S go back
+                        else if (int(Game.game) == 83 || int(Game.game) == 115) {
+                            Game.x += 1;
+                            if (int(Game.arr[Game.x][Game.y]) == 35) { // If the new value = barrier, then it takes the previous value
+                                Game.game = Game.temp_but;
+                            }
+                            Game.x -= 1;
+                        }
+                        // A go left
+                        else if (int(Game.game) == 97 || int(Game.game) == 65) {
+                            Game.y -= 1;
+                            if (int(Game.arr[Game.x][Game.y]) == 35) { // If the new value = barrier, then it takes the previous value
+                                Game.game = Game.temp_but;
+                            }
+                            Game.y += 1;
+                        }
+                        // D go right
+                        else if (int(Game.game) == 100 || int(Game.game) == 68) {
+                            Game.y += 1;
+                            if (int(Game.arr[Game.x][Game.y]) == 35) { // If the new value = barrier, then it takes the previous value
+                                Game.game = Game.temp_but;
+                            }
+                            Game.y -= 1;
+
+                        }
+
+                    }
+                    else { // if there is no new value, then it continues to go in the direction the user chose last time
+                        management(Game.game); 
+                        this_thread::sleep_for(chrono::milliseconds(350)); 
+                    }
+                    // BOT
                     Bot_managment();
 
                 }
