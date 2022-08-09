@@ -33,3 +33,5 @@ V2.0 has completely updated the menu, fixed all the bugs in the code without a s
 V2.1 Fix bugs
 
 V2.2 Updated character management, more like the official game, added more comments that are responsible for more detailed information
+
+V2.3 Updated 
