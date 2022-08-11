@@ -11,9 +11,10 @@ char symbol = 0;
 // temp number
 int temp_1, result_menu = 0;
 // Menu
-string menu[2][1] = {
+string menu[3][1] = {
     {"Exit"},
-    {"Start"},
+    {"Setting"},
+    {"Start"}
 };
 char game;
 char temp_but;
@@ -21,16 +22,15 @@ char temp_but;
 char pakmen = char(2);
 //points and heart
 int points = 0, heart = 3;
-//position players
+//position spawn players
 int x = 2, y = 1;
 int d = 0, a = 0;
-
+// Position spawn bot
 int x_bot = 5, y_bot = 5;
 int reserve_x_bot = 0, reserve_y_bot = 0;
 int temp_number = 0;
 
-int rand_number_x, rand_number_y;
-
+// game map
 char arr[17][20] = {
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
     {'#','+',' ',' ',' ',' ','•',' ',' ',' ',' ',' ',' ',' ','+',' ',' ',' ','#'},
@@ -100,12 +100,15 @@ void audit_points() {
 
 }
 
+
+
 void PAC_MAN() {
     cout << " ____    __       ___                 _    _       __      _____       " << endl;
     cout << "( _  \\  / _\\     / __)    _____      / \\__/ \\     / _\\    /  _  \\  " << endl;
     cout << " ) __/ /    \\   ( (__    |_____|    /  ____  \\   /    \\  /  / \\  \\" << endl;
     cout << "(__)   \\_/\\_/    \\___)             /__/    \\__\\  \\_/\\_/  |__| |__|" << endl;
 }
+
 
 
 void Bot_managment() {
@@ -269,6 +272,8 @@ nazad:
     }
 }
 
+
+
 void management(char game) {
     // W go forward
     if (game == 'W' || game == 'w') {
@@ -400,7 +405,7 @@ int main()
     srand(time(NULL));
     system("mode con cols=71 lines=25");
     PAC_MAN();
-    for (int i = 1; i >= 0; i--) {
+    for (int i = 2; i >= 0; i--) {
         for (int j = 0; j < 1; j++) {
             cout << "\t\t\t" << "    " << menu[i][j] << "    ";
             cout << endl;
@@ -415,33 +420,42 @@ int main()
             symbol = _getch();
             if ((int)symbol == 72 || (int)symbol == 224) {
                 system("cls");
+                if (result_menu != 2) {
+                    result_menu++;
+                }
                 PAC_MAN();
-                temp_1 = 1;
-                cout << "\t\t\t" << "<<< " << menu[temp_1][0] << " >>>" << endl;
-                temp_1--;
-                cout << "\t\t\t" << "    " << menu[temp_1][0] << "    " << endl;
-                result_menu = 0;
+                for (int i = 2; i >= 0; i--) {
+                    if (result_menu == i) {
+                        cout << "\t\t\t" << "<<< " << menu[i][0] << " >>>" << endl;
+                    }
+                    else {
+                        cout << "\t\t\t" << "    " << menu[i][0] << "    " << endl;
+                    }
+                }
+                cout << result_menu;
 
 
             }
             else if ((int)symbol == 80 || (int)symbol == 224) {
                 system("cls");
+                if (result_menu != 0) {
+                    result_menu--;
+                }
                 PAC_MAN();
-                temp_1 = 1;
-                cout << "\t\t\t" << "    " << menu[temp_1][0] << "    " << endl;
-                temp_1--;
-                cout << "\t\t\t" << "<<< " << menu[temp_1][0] << " >>>" << endl;
-                result_menu = 1;
-
-
-
-
+                for (int i = 2; i >= 0; i--) {
+                    if (result_menu == i) {
+                        cout << "\t\t\t" << "<<< " << menu[i][0] << " >>>" << endl;
+                    }
+                    else {
+                        cout << "\t\t\t" << "    " << menu[i][0] << "    " << endl;
+                    }
+                }
             }
         }
 
         if (symbol == 13) {
             // Start
-            if (result_menu == 0) {
+            if (result_menu == 2) {
                 // Standart values
                 heart = 3;
                 points = 0;
@@ -484,6 +498,7 @@ int main()
                     // Checks if the user has pressed another button
                     if (_kbhit()) {
                         game = _getch();
+                        // W go forward
                         if (int(game) == 119 || int(game) == 87) {
                             x -= 1;
                             if (int(arr[x][y]) == 35) { // If the new value = barrier, then it takes the previous value
@@ -519,17 +534,21 @@ int main()
 
                     }
                     else { // if there is no new value, then it continues to go in the direction the user chose last time
-                        management(game); 
-                        this_thread::sleep_for(chrono::milliseconds(350)); 
+                        management(game);
+                        this_thread::sleep_for(chrono::milliseconds(350));
                     }
                     // BOT
                     Bot_managment();
 
                 }
-                continue;
+               
+            }
+            // Setting
+            else if (result_menu == 1) {
+                
             }
             // Exit
-            else if (result_menu == 1) {
+            else if (result_menu == 0) {
                 return 0;
             }
             // Problem
@@ -542,3 +561,4 @@ int main()
     }
 
 }
+
