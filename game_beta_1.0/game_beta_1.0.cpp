@@ -432,7 +432,6 @@ int main()
                         cout << "\t\t\t" << "    " << menu[i][0] << "    " << endl;
                     }
                 }
-                cout << result_menu;
 
 
             }
@@ -541,11 +540,11 @@ int main()
                     Bot_managment();
 
                 }
-               
+
             }
             // Setting
             else if (result_menu == 1) {
-                
+
             }
             // Exit
             else if (result_menu == 0) {
@@ -561,4 +560,3 @@ int main()
     }
 
 }
-
