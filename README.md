@@ -34,6 +34,8 @@ V2.1 Fix bugs
 
 V2.2 Updated character management, more like the official game, added more comments that are responsible for more detailed information
 
+![2022-08-14 00-51-13_Trim](https://user-images.githubusercontent.com/75688693/184511915-03c19419-c342-4022-94da-d36b7207eb2a.gif)
+
 V2.3 Updated 
 
 V2.4 Updated The menu was completely rewritten. The "Settings" item has been added, but it does not work yet
