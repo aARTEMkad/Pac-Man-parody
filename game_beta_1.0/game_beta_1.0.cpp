@@ -5,21 +5,36 @@
 
 
 using namespace std;
-
+//Player
+char pakmen = char(2);
 // check symbol
 char symbol = 0;
 // temp number
-int temp_1, result_menu = 0;
+int temp_1, result_menu = 2;
 // Menu
 string menu[3][1] = {
     {"Exit"},
     {"Setting"},
     {"Start"}
 };
-char game;
+string menu_1[3][1] = {
+    {"Exit"},
+    {"Color"},
+    {"value points"}
+};
+string menu_color[8][1] = {
+    {"Exit"},
+    {"White"},
+    {"Blue"},
+    {"Red"},
+    {"Gray"},
+    {"Green"},
+    {"Yellow"},
+    {"Aqua"},
+};
+
+char button;
 char temp_but;
-//Player
-char pakmen = char(2);
 //points and heart
 int points = 0, heart = 3;
 //position spawn players
@@ -30,22 +45,22 @@ int x_bot = 5, y_bot = 5;
 int reserve_x_bot = 0, reserve_y_bot = 0;
 int temp_number = 0;
 
-// game map
+// button map
 char arr[17][20] = {
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
-    {'#','+',' ',' ',' ',' ','•',' ',' ',' ',' ',' ',' ',' ','+',' ',' ',' ','#'},
+    {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
     {'#',' ','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#',' ','#'},
-    {'#',' ',' ',' ',' ','#',' ','+',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
-    {'#','#','#','#','+','#','#','#',' ','#',' ','#','#','#',' ','#','#','#','#'},
-    {'#','#','#','#',' ','#','+',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
+    {'#',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
+    {'#','#','#','#',' ','#','#','#',' ','#',' ','#','#','#',' ','#','#','#','#'},
+    {'#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
     {'#','#','#','#',' ','#',' ','#','#',' ','#','#',' ','#',' ','#','#','#','#'},
-    {' ',' ',' ',' ','+',' ',' ','#',' ',' ',' ','#',' ',' ','+',' ',' ',' ',' '},
-    {'#','#','#','#',' ','#','+','#','#','#','#','#',' ','#',' ','#','#','#','#'},
+    {' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' '},
+    {'#','#','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#','#','#'},
     {'#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
     {'#','#','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#','#','#'},
-    {'#',' ',' ',' ','+',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+    {'#',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
     {'#',' ','#','#',' ','#','#','#',' ','#',' ','#','#','#',' ','#','#',' ','#'},
-    {'#',' ',' ','#',' ',' ',' ',' ','+',' ',' ',' ',' ',' ',' ','#',' ',' ','#'},
+    {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ','#'},
     {'#','#',' ','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#',' ','#','#'},
     {'#',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
@@ -406,15 +421,15 @@ int main()
     system("mode con cols=71 lines=25");
     PAC_MAN();
     for (int i = 2; i >= 0; i--) {
-        for (int j = 0; j < 1; j++) {
-            cout << "\t\t\t" << "    " << menu[i][j] << "    ";
-            cout << endl;
+        if (result_menu == i) {
+            cout << "\t\t\t" << "<<< " << menu[i][0] << " >>>" << endl;
+        }
+        else {
+            cout << "\t\t\t" << "    " << menu[i][0] << "    " << endl;
         }
     }
     // Menu
     for (;;) {
-
-
         symbol = _getch();
         if (symbol == -32) {
             symbol = _getch();
@@ -469,7 +484,7 @@ int main()
                     }
                     cout << " ";
                 }
-                game = _getch();
+                button = _getch();
                 // Start of the main game
                 for (int i = 0; i != 1;) {
                     system("cls");
@@ -493,39 +508,39 @@ int main()
                         i = 1;
                     }
                     // Saves the value that will be changed later
-                    temp_but = game;
+                    temp_but = button;
                     // Checks if the user has pressed another button
                     if (_kbhit()) {
-                        game = _getch();
+                        button = _getch();
                         // W go forward
-                        if (int(game) == 119 || int(game) == 87) {
+                        if (int(button) == 119 || int(button) == 87) {
                             x -= 1;
                             if (int(arr[x][y]) == 35) { // If the new value = barrier, then it takes the previous value
-                                game = temp_but;
+                                button = temp_but;
                             }
                             x += 1;
                         }
                         // S go back
-                        else if (int(game) == 83 || int(game) == 115) {
+                        else if (int(button) == 83 || int(button) == 115) {
                             x += 1;
                             if (int(arr[x][y]) == 35) { // If the new value = barrier, then it takes the previous value
-                                game = temp_but;
+                                button = temp_but;
                             }
                             x -= 1;
                         }
                         // A go left
-                        else if (int(game) == 97 || int(game) == 65) {
+                        else if (int(button) == 97 || int(button) == 65) {
                             y -= 1;
                             if (int(arr[x][y]) == 35) { // If the new value = barrier, then it takes the previous value
-                                game = temp_but;
+                                button = temp_but;
                             }
                             y += 1;
                         }
                         // D go right
-                        else if (int(game) == 100 || int(game) == 68) {
+                        else if (int(button) == 100 || int(button) == 68) {
                             y += 1;
                             if (int(arr[x][y]) == 35) { // If the new value = barrier, then it takes the previous value
-                                game = temp_but;
+                                button = temp_but;
                             }
                             y -= 1;
 
@@ -533,7 +548,7 @@ int main()
 
                     }
                     else { // if there is no new value, then it continues to go in the direction the user chose last time
-                        management(game);
+                        management(button);
                         this_thread::sleep_for(chrono::milliseconds(350));
                     }
                     // BOT
@@ -544,7 +559,166 @@ int main()
             }
             // Setting
             else if (result_menu == 1) {
+                system("cls");
+                PAC_MAN();
+                for (int i = 2; i >= 0; i--) {
+                    if (result_menu == i) {
+                        cout << "\t\t\t" << "<<< " << menu_1[i][0] << " >>>" << endl;
+                    }
+                    else {
+                        cout << "\t\t\t" << "    " << menu_1[i][0] << "    " << endl;
+                    }
+                }
+                for (int i = 0; i != 1;) {
+                    symbol = _getch();
+                    if (symbol == -32) {
+                        symbol = _getch();
+                        if ((int)symbol == 72 || (int)symbol == 224) {
+                            system("cls");
+                            if (result_menu != 2) {
+                                result_menu++;
+                            }
+                            PAC_MAN();
+                            for (int i = 2; i >= 0; i--) {
+                                if (result_menu == i) {
+                                    cout << "\t\t\t" << "<<< " << menu_1[i][0] << " >>>" << endl;
+                                }
+                                else {
+                                    cout << "\t\t\t" << "    " << menu_1[i][0] << "    " << endl;
+                                }
+                            }
+                        }
+                        else if ((int)symbol == 80 || (int)symbol == 224) {
+                            system("cls");
+                            if (result_menu != 0) {
+                                result_menu--;
+                            }
+                            PAC_MAN();
+                            for (int i = 2; i >= 0; i--) {
+                                if (result_menu == i) {
+                                    cout << "\t\t\t" << "<<< " << menu_1[i][0] << " >>>" << endl;
+                                }
+                                else {
+                                    cout << "\t\t\t" << "    " << menu_1[i][0] << "    " << endl;
+                                }
+                            }
+                        }
+                    }
+                    if (symbol == 13) {
+                        // Exit
+                        if (result_menu == 0) {
+                            i = 1;
+                            system("cls");
+                            PAC_MAN();
+                            for (int i = 2; i >= 0; i--) {
+                                if (result_menu == i) {
+                                    cout << "\t\t\t" << "<<< " << menu[i][0] << " >>>" << endl;
+                                }
+                                else {
+                                    cout << "\t\t\t" << "    " << menu[i][0] << "    " << endl;
+                                }
+                            }
+                        }
+                        // Color
+                        else if (result_menu == 1) {
+                            system("cls");
+                            PAC_MAN();
+                            for (int i = 7; i >= 0; i--) {
+                                if (result_menu == i) {
+                                    cout << "\t\t\t" << "<<< " << menu_color[i][0] << " >>>" << endl;
+                                }
+                                else {
+                                    cout << "\t\t\t" << "    " << menu_color[i][0] << "    " << endl;
+                                }
+                            }
+                            for (int d = 0; d != 1;) {
+                                symbol = _getch();
+                                if (symbol == -32) {
+                                    symbol = _getch();
+                                    if ((int)symbol == 72 || (int)symbol == 224) {
+                                        system("cls");
+                                        if (result_menu != 7) {
+                                            result_menu++;
+                                        }
+                                        PAC_MAN();
+                                        for (int i = 7; i >= 0; i--) {
+                                            if (result_menu == i) {
+                                                cout << "\t\t\t" << "<<< " << menu_color[i][0] << " >>>" << endl;
+                                            }
+                                            else {
+                                                cout << "\t\t\t" << "    " << menu_color[i][0] << "    " << endl;
+                                            }
+                                        }
+                                    }
+                                    else if ((int)symbol == 80 || (int)symbol == 224) {
+                                        system("cls");
+                                        if (result_menu != 0) {
+                                            result_menu--;
+                                        }
+                                        PAC_MAN();
+                                        for (int i = 7; i >= 0; i--) {
+                                            if (result_menu == i) {
+                                                cout << "\t\t\t" << "<<< " << menu_color[i][0] << " >>>" << endl;
+                                            }
+                                            else {
+                                                cout << "\t\t\t" << "    " << menu_color[i][0] << "    " << endl;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (symbol == 13) {
+                                    // Exit
+                                    if (result_menu == 0) {
+                                        d = 1;
+                                        system("cls");
+                                        PAC_MAN();
+                                        for (int i = 2; i >= 0; i--) {
+                                            if (result_menu == i) {
+                                                cout << "\t\t\t" << "<<< " << menu_1[i][0] << " >>>" << endl;
+                                            }
+                                            else {
+                                                cout << "\t\t\t" << "    " << menu_1[i][0] << "    " << endl;
+                                            }
+                                        }
+                                    }
+                                    // White
+                                    else if (result_menu == 1) {
+                                        system("color 7");
+                                    }
+                                    // Blue
+                                    else if (result_menu == 2) {
+                                        system("color 1");
+                                    }
+                                    // Red
+                                    else if (result_menu == 3) {
+                                        system("color 4");
+                                    }
+                                    // Gray
+                                    else if (result_menu == 4) {
+                                        system("color 8");
+                                    }
+                                    // Green
+                                    else if (result_menu == 5) {
+                                        system("color 2");
+                                    }
+                                    // Yellow
+                                    else if (result_menu == 6) {
+                                        system("color 6");
+                                    }
+                                    // Aqua
+                                    else if (result_menu == 7) {
+                                        system("color 3");
+                                    }
+                                }
+                            }
+                        }
+                        // Value points
+                        else if (result_menu == 2) {
 
+                        }
+
+                    }
+                }
             }
             // Exit
             else if (result_menu == 0) {
