@@ -39,3 +39,5 @@ V2.3 Updated
 V2.4 Updated The menu was completely rewritten. The "Settings" item has been added, but it does not work yet
 
 V2.5 Update In the settings, a group of colors and the number of points on the map have been added, the colors have already been made and the number of points will be added to the next versions of the project
+
+![2022-08-14 00-40-27_Trim](https://user-images.githubusercontent.com/75688693/184511711-76922cfa-cc56-476a-9330-e96a69782826.gif)
