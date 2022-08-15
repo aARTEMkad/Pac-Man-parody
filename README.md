@@ -47,3 +47,6 @@ V2.5 Update In the settings, a group of colors and the number of points on the m
 ![2022-08-14 00-40-27_Trim](https://user-images.githubusercontent.com/75688693/184511711-76922cfa-cc56-476a-9330-e96a69782826.gif)
 
 V2.6 Added to allow the user to choose how many points are created on the map, default is 20
+
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/75688693/184719977-cee62dcf-d0e8-4ad9-8dc3-a18ac461b720.gif)
+
