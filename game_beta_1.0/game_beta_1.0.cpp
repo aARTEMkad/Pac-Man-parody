@@ -5,12 +5,27 @@
 
 
 using namespace std;
+int value = 20;
+
+int rand_x = 0, rand_y = 0;
 //Player
 char pakmen = char(2);
 // check symbol
 char symbol = 0;
 // temp number
 int temp_1, result_menu = 2;
+
+char button;
+char temp_but;
+//points and heart
+int points = 0, heart = 3;
+//position spawn players
+int x = 2, y = 1;
+int d = 0, a = 0;
+// Position spawn bot
+int x_bot = 5, y_bot = 5;
+int reserve_x_bot = 0, reserve_y_bot = 0;
+int temp_number = 0;
 // Menu
 string menu[3][1] = {
     {"Exit"},
@@ -33,20 +48,9 @@ string menu_color[8][1] = {
     {"Aqua"},
 };
 
-char button;
-char temp_but;
-//points and heart
-int points = 0, heart = 3;
-//position spawn players
-int x = 2, y = 1;
-int d = 0, a = 0;
-// Position spawn bot
-int x_bot = 5, y_bot = 5;
-int reserve_x_bot = 0, reserve_y_bot = 0;
-int temp_number = 0;
 
 
-// button map
+
 char arr[17][20] = {
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
     {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
@@ -66,9 +70,6 @@ char arr[17][20] = {
     {'#',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
 };
-/*7.0 7.18*/
-
-
 
 void audit_points() {
     //audit points
@@ -116,16 +117,12 @@ void audit_points() {
 
 }
 
-
-
 void PAC_MAN() {
     cout << " ____    __       ___                 _    _       __      _____       " << endl;
     cout << "( _  \\  / _\\     / __)    _____      / \\__/ \\     / _\\    /  _  \\  " << endl;
     cout << " ) __/ /    \\   ( (__    |_____|    /  ____  \\   /    \\  /  / \\  \\" << endl;
     cout << "(__)   \\_/\\_/    \\___)             /__/    \\__\\  \\_/\\_/  |__| |__|" << endl;
 }
-
-
 
 void Bot_managment() {
 nazad:
@@ -288,8 +285,6 @@ nazad:
     }
 }
 
-
-
 void management(char game) {
     // W go forward
     if (game == 'W' || game == 'w') {
@@ -419,6 +414,16 @@ int main()
 {
 
     srand(time(NULL));
+    for (; value > 0; value--) {// Random spawn points
+        rand_x = rand() % 16 + 1;
+        rand_y = rand() % 18 + 1;
+        for (; arr[rand_x][rand_y] != ' ';) {
+            rand_x = rand() % 16 + 1;
+            rand_y = rand() % 18 + 1;
+        }
+        arr[rand_x][rand_y] = '+';
+
+    }
     system("mode con cols=71 lines=25");
     PAC_MAN();
     for (int i = 2; i >= 0; i--) {
@@ -715,7 +720,40 @@ int main()
                         }
                         // Value points
                         else if (result_menu == 2) {
+                            for (int i = 0; i < 17; i++) {
+                                for (int d = 0; d < 20; d++) {
+                                    if (arr[i][d] == '+') {
+                                        arr[i][d] = ' ';
+                                    }
+                                }
+                            }
+                            system("cls");
+                            PAC_MAN();
+                            cout << "\t\t\tWrite value points:";
+                            cin >> value;
+                            if (value >= 146) {
+                                value = 145;
+                            }
+                            for (; value > 0; value--) {// Random spawn points
+                                rand_x = rand() % 16 + 1;
+                                rand_y = rand() % 18 + 1;
+                                for (; arr[rand_x][rand_y] != ' ';) {
+                                    rand_x = rand() % 16 + 1;
+                                    rand_y = rand() % 18 + 1;
+                                }
+                                arr[rand_x][rand_y] = '+';
 
+                            }
+                            system("cls");
+                            PAC_MAN();
+                            for (int i = 2; i >= 0; i--) {
+                                if (result_menu == i) {
+                                    cout << "\t\t\t" << "<<< " << menu_1[i][0] << " >>>" << endl;
+                                }
+                                else {
+                                    cout << "\t\t\t" << "    " << menu_1[i][0] << "    " << endl;
+                                }
+                            }
                         }
 
                     }
