@@ -1,41 +1,51 @@
-
-
 #include <iostream>
-#include <Windows.h>
+#include <conio.h>
+#include <thread>
+#include <chrono>
+
 
 using namespace std;
 
 struct prog {
-    string menu;
+    // check symbol
+    char symbol = 0;
+    // temp number
+    int temp_1, result_menu = 0;
+    // Menu
+    string menu[2][1] = {
+        {"Exit"},
+        {"Start"},
+    };
     char game;
     //Player
     char pakmen = char(2);
     //points and heart
-    int points = 0,heart = 3;
+    int points = 0, heart = 3;
     //position players
     int x = 2, y = 2;
     int d = 0, a = 0;
 
     int x_bot = 5, y_bot = 5;
+    int reserve_x_bot = 0, reserve_y_bot = 0;
+    int temp_number = 0;
 
-    int number = 10;
-    int rand_number_x,rand_number_y;
+    int rand_number_x, rand_number_y;
 
     char arr[17][19] = {
         {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        {'#','+',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','+',' ',' ',' ','#'},
         {'#',' ','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#',' ','#'},
-        {'#',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
-        {'#','#','#','#',' ','#','#','#',' ','#',' ','#','#','#',' ','#','#','#','#'},
-        {'#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
+        {'#',' ',' ',' ',' ','#',' ','+',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
+        {'#','#','#','#','+','#','#','#',' ','#',' ','#','#','#',' ','#','#','#','#'},
+        {'#','#','#','#',' ','#','+',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
         {'#','#','#','#',' ','#',' ','#','#',' ','#','#',' ','#',' ','#','#','#','#'},
-        {' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' '},
-        {'#','#','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#','#','#'},
+        {' ',' ',' ',' ','+',' ',' ','#',' ',' ',' ','#',' ',' ','+',' ',' ',' ',' '},
+        {'#','#','#','#',' ','#','+','#','#','#','#','#',' ','#',' ','#','#','#','#'},
         {'#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','#','#','#','#'},
         {'#','#','#','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#','#','#','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        {'#',' ',' ',' ','+',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
         {'#',' ','#','#',' ','#','#','#',' ','#',' ','#','#','#',' ','#','#',' ','#'},
-        {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ','#'},
+        {'#',' ',' ','#',' ',' ',' ',' ','+',' ',' ',' ',' ',' ',' ','#',' ',' ','#'},
         {'#','#',' ','#',' ','#',' ','#','#','#','#','#',' ','#',' ','#',' ','#','#'},
         {'#',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ','#'},
         {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
@@ -48,28 +58,34 @@ void audit_points() {
     //audit points
     if (Game.points == 120) {
         for (int i = 0; i < 100; i++) {
-            Sleep(750);
+            this_thread::sleep_for(chrono::milliseconds(750));
             system("cls");
-            Game.d = rand() % 6 + 1;
+            Game.d = 1;
             switch (Game.d)
             {
             case 1:
                 system("color 1");
+                ++Game.d;
                 break;
             case 2:
                 system("color 2");
+                ++Game.d;
                 break;
             case 3:
                 system("color 3");
+                ++Game.d;
                 break;
             case 4:
                 system("color 4");
+                ++Game.d;
                 break;
             case 5:
                 system("color 5");
+                ++Game.d;
                 break;
             case 6:
                 system("color 6");
+                Game.d = 1;
                 break;
             default:
                 break;
@@ -83,35 +99,161 @@ void audit_points() {
 
 }
 
-void spawn_map() {
-    for (int i = 0; i < 17; i++) {
-        cout << "\n";
-        for (int k = 0; k < 19; k++) {
-            cout << " ";
-            cout << Game.arr[i][k];
-        }
-        cout << " ";
-    }
-
+void PAC_MAN() {
+    cout << " ____    __       ___                 _    _       __      _____       " << endl;
+    cout << "( _  \\  / _\\     / __)    _____      / \\__/ \\     / _\\    /  _  \\  " << endl;
+    cout << " ) __/ /    \\   ( (__    |_____|    /  ____  \\   /    \\  /  / \\  \\" << endl;
+    cout << "(__)   \\_/\\_/    \\___)             /__/    \\__\\  \\_/\\_/  |__| |__|" << endl;
 }
 
-void spawn_points() {
-    for (int i = 0; i < 17, Game.number != 0; i++) {
-        for (int j = 0; j < 19,Game.number != 0; j++) {
-            if ((int)Game.arr[i][j] == 32) {
-                Game.rand_number_x = rand() % 16 + 1;
-                Game.rand_number_y = rand() % 18 + 1;
-                if ((int)Game.arr[Game.rand_number_x][Game.rand_number_y] != 35) {
-                    Game.arr[Game.rand_number_x][Game.rand_number_y] = 43;
-                    Game.number--;
-                }
-               
-               
-            }
+void Bot_managment() {
+nazad:
+
+    Game.a = 1 + rand() % 4;
+ 
+    switch (Game.a)
+    {
+    case 1:
+
+        Game.arr[Game.x_bot][Game.y_bot] = ' ';
+        Game.x_bot -= 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
         }
-    }
+        // barrier # == 35
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
+            Game.x_bot += 1;
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
+            goto nazad;
+
+        }
+        // Points + == 43 
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
+            
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
+
+        }
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
+            Game.heart--;
+
+
+        }
+        else {
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+        }
+        break;
+    case 2:
+
+        Game.arr[Game.x_bot][Game.y_bot] = ' ';
+        Game.x_bot += 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
+        }
+        //barrier # == 35
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
+            Game.x_bot -= 1;
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
+            goto nazad;
+
+        }
+        // Points + == 43
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
+
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
+
+        }
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
+            Game.heart--;
+
+
+        }
+       
+        else {
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+        }
+        break;
+    case 3:
+
+        Game.arr[Game.x_bot][Game.y_bot] = ' ';
+        Game.y_bot -= 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
+        }
         
-    
+        //barrier # == 35
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
+            Game.y_bot += 1;
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
+            goto nazad;
+
+        }
+        // Points + == 43
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
+        }
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
+            Game.heart--;
+
+
+        }
+        else {
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+        }
+        break;
+    case 4:
+
+        Game.arr[Game.x_bot][Game.y_bot] = ' ';
+        Game.y_bot += 1;
+        if (Game.temp_number == 1) {
+            Game.arr[Game.reserve_x_bot][Game.reserve_y_bot] = '+';
+            Game.temp_number = 0;
+        }
+        
+        //barrier # == 35
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
+            Game.y_bot -= 1;
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+            if (Game.arr[Game.x_bot][Game.y_bot] == Game.arr[Game.reserve_x_bot][Game.reserve_y_bot]) {
+                Game.temp_number = 1;
+            }
+            goto nazad;
+
+        }
+        // Points + == 43
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 43) {
+            Game.reserve_x_bot = Game.x_bot;
+            Game.reserve_y_bot = Game.y_bot;
+            Game.temp_number = 1;
+        }
+        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
+            Game.heart--;
+
+
+        }
+        else {
+         
+            Game.arr[Game.x_bot][Game.y_bot] = '%';
+        }
+        break;
+    }
 }
 
 void management(char game) {
@@ -226,174 +368,95 @@ void management(char game) {
 
 }
 
-
-void Bot_managment() {
-nazad:
-
-    Game.a = 1 + rand() % 4;
-
-    switch (Game.a)
-    {
-    case 1:
-
-        Game.arr[Game.x_bot][Game.y_bot] = '+';
-        Game.x_bot -= 1;
-        // barrier # == 35
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
-            Game.x_bot += 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-            goto nazad;
-
-        }
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
-            Game.heart--;
-
-
-        }
-        else {
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-        }
-        break;
-    case 2:
-
-        Game.arr[Game.x_bot][Game.y_bot] = '+';
-        Game.x_bot += 1;
-        //barrier # == 35
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
-            Game.x_bot -= 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-            goto nazad;
-
-        }
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
-            Game.heart--;
-
-
-        }
-        else {
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-        }
-        break;
-    case 3:
-
-        Game.arr[Game.x_bot][Game.y_bot] = '+';
-        Game.y_bot -= 1;
-        //barrier # == 35
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
-            Game.y_bot += 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-            goto nazad;
-
-        }
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
-            Game.heart--;
-
-
-        }
-        else {
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-        }
-        break;
-    case 4:
-
-        Game.arr[Game.x_bot][Game.y_bot] = '+';
-        Game.y_bot += 1;
-        //barrier # == 35
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == 35) {
-            Game.y_bot -= 1;
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-            goto nazad;
-
-        }
-        if (int(Game.arr[Game.x_bot][Game.y_bot]) == Game.pakmen) {
-            Game.heart--;
-
-
-        }
-        else {
-            Game.arr[Game.x_bot][Game.y_bot] = '%';
-        }
-        break;
-    }
-}
-
-void str_PAC_MAN() {
-
-    cout << " ____    __       ___                 _    _       __      _____       " << endl;
-    cout << "( _  \\  / _\\     / __)    _____      / \\__/ \\     / _\\    /  _  \\  " << endl;
-    cout << " ) __/ /    \\   ( (__    |_____|    /  ____  \\   /    \\  /  / \\  \\" << endl;
-    cout << "(__)   \\_/\\_/    \\___)             /__/    \\__\\  \\_/\\_/  |__| |__|" << endl;
-
-}
-
 int main()
 {
-
     srand(time(NULL));
-    for (; int(Game.arr[Game.x][Game.y]) == 35;) {
-        Game.x = rand() % 16 + 1;
-        Game.y = rand() % 18 + 1;
-    }
-    for (; int(Game.arr[Game.x_bot][Game.y_bot]) == 35;) {
-        Game.x_bot = rand() % 16 + 1;
-        Game.y_bot = rand() % 18 + 1;
-    }
-    Game.arr[Game.x][Game.y] = Game.pakmen;
-    Game.arr[Game.x_bot][Game.y_bot] = '%';
 
-    cout << "\tCommands\nStart - start game \n Exit - leave game\n";
+    PAC_MAN();
 
-    Sleep(2000);
-    system("cls");
-    system("color 6");
-    str_PAC_MAN();
-    Sleep(2000);
-    system("cls");
-    system("color 9");
-menu_1:
-    cout << "Commands:";
-    cin >> Game.menu;
-    if (Game.menu == "start" || Game.menu == "Start") {
-        system("cls");
-        spawn_points();
-        for (int i = 0; i < 100000; i++) {
-            system("cls");
-            str_PAC_MAN();
-            cout << "Points - " << Game.points << " Heart - " << Game.heart;
-            spawn_map();
-            if (Game.heart < 1) {
+    for (int i = 1; i >= 0; i--) {
+        for (int j = 0; j < 1; j++) {
+            cout << "\t\t\t" << "    " << Game.menu[i][j] << "    ";
+            cout << endl;
+        }
+    }
+
+    for (int menu_1 = 0; menu_1 < 1000; menu_1++) {
+
+
+        Game.symbol = _getch();
+        if (Game.symbol == -32) {
+            Game.symbol = _getch();
+            if ((int)Game.symbol == 72 || (int)Game.symbol == 224) {
                 system("cls");
-                cout << "\nGame Over\n";
-                cout << "Point - " << Game.points;
+                PAC_MAN();
+                Game.temp_1 = 1;
+                cout << "\t\t\t" << "<<< " << Game.menu[Game.temp_1][0] << " >>>" << endl;
+                Game.temp_1--;
+                cout << "\t\t\t" << "    " << Game.menu[Game.temp_1][0] << "    " << endl;
+                Game.result_menu = 0;
+
+
+            }
+            else if ((int)Game.symbol == 80 || (int)Game.symbol == 224) {
+                system("cls");
+                PAC_MAN();
+                Game.temp_1 = 1;
+                cout << "\t\t\t" << "    " << Game.menu[Game.temp_1][0] << "    " << endl;
+                Game.temp_1--;
+                cout << "\t\t\t" << "<<< " << Game.menu[Game.temp_1][0] << " >>>" << endl;
+                Game.result_menu = 1;
+
+
+
+
+            }
+        }
+
+        if (Game.symbol == 13) {
+            // Start
+            if (Game.result_menu == 0) {
+                Game.heart = 3;
+                Game.points = 0;
+                for (int i = 0; i != 1;) {
+                    system("cls");
+                    cout << "TEMP NUMBER :: " << Game.temp_number << endl;
+                    cout << "\tPoints - " << Game.points << " Heart - " << Game.heart;
+                    for (int i = 0; i < 17; i++) {
+                        cout << "\n";
+                        for (int k = 0; k < 19; k++) {
+                            cout << " ";
+                            cout << Game.arr[i][k];
+                        }
+                        cout << " ";
+                    }
+                    if (Game.heart < 1) {
+                        system("cls");
+                        cout << "\nGame Over\n";
+                        cout << "Point - " << Game.points;
+                        cout << "\nPress the up or down arrow\n";
+                        i = 1;
+                    }
+                    audit_points();
+                    Game.game = _getch();
+                    management(Game.game);
+                    Bot_managment();
+
+                }
+                continue;
+            }
+            // Exit
+            else if (Game.result_menu == 1) {
                 return 0;
             }
-            audit_points();
-            cin >> Game.game;
-            management(Game.game);
-            Bot_managment();
+            // Problem
+            else {
+                cout << "\nError\n";
+            }
+        }
 
-        }
-    }
-    else if (Game.menu == "Setting" || Game.menu == "setting") {
-        cout << "1 - the number of spawn points\n2 - exit\n";
-        cin >> Game.menu;
-        if (Game.menu == "1") {
-            cout << "write how many points you want to accumulate:";
-            cin >> Game.number;
-            goto menu_1;
-        }
-        else {
-            goto menu_1;
-        }
-    }
-    else if (Game.menu == "Exit" || Game.menu == "exit") {
-        return 0;
-    }
-    else {
-        cout << "Error";
 
     }
+
+
 }
-
-/*
-added how many points he wants on the player map and a new category in the menu called "Setting" in which the number of spawn points changes. Everything is broken down by function*/
