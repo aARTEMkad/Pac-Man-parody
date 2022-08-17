@@ -160,6 +160,19 @@ nazad:
         if (int(arr[x_bot][y_bot]) == pakmen) {
             heart--;
         }
+        if (x_bot == 7 && y_bot == 0) {
+            arr[x_bot][y_bot] = ' ';
+            x_bot = 7;
+            y_bot = 18;
+            arr[x_bot][y_bot] = '%';
+        }
+        if (x_bot == 7 && y_bot == 18) {
+            arr[x_bot][y_bot] = ' ';
+            x_bot = 7;
+            y_bot = 0;
+            arr[x_bot][y_bot] = '%';
+
+        }
         else {
             arr[x_bot][y_bot] = '%';
         }
@@ -195,7 +208,19 @@ nazad:
 
 
         }
+        if (x_bot == 7 && y_bot == 0) {
+            arr[x_bot][y_bot] = ' ';
+            x_bot = 7;
+            y_bot = 18;
+            arr[x_bot][y_bot] = '%';
+        }
+        if (x_bot == 7 && y_bot == 18) {
+            arr[x_bot][y_bot] = ' ';
+            x_bot = 7;
+            y_bot = 0;
+            arr[x_bot][y_bot] = '%';
 
+        }
         else {
             arr[x_bot][y_bot] = '%';
         }
@@ -230,11 +255,18 @@ nazad:
 
 
         }
-        if (x == 7 && y == 0) {
+        if (x_bot == 7 && y_bot == 0) {
             arr[x_bot][y_bot] = ' ';
-            x = 7;
-            y = 18;
+            x_bot = 7;
+            y_bot = 18;
             arr[x_bot][y_bot] = '%';
+        }
+        if (x_bot == 7 && y_bot == 18) {
+            arr[x_bot][y_bot] = ' ';
+            x_bot = 7;
+            y_bot = 0;
+            arr[x_bot][y_bot] = '%';
+
         }
         else {
             arr[x_bot][y_bot] = '%';
@@ -270,12 +302,18 @@ nazad:
 
 
         }
-        if (x == 7 && y == 18) {
+        if (x_bot == 7 && y_bot == 18) {
             arr[x_bot][y_bot] = ' ';
-            x = 7;
-            y = 0;
+            x_bot = 7;
+            y_bot = 0;
             arr[x_bot][y_bot] = '%';
 
+        }
+        if (x_bot == 7 && y_bot == 0) {
+            arr[x_bot][y_bot] = ' ';
+            x_bot = 7;
+            y_bot = 18;
+            arr[x_bot][y_bot] = '%';
         }
         else {
 
