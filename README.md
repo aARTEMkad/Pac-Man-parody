@@ -52,3 +52,4 @@ V2.6 Added to allow the user to choose how many points are created on the map, d
 
 V2.7 Fix bugs
 
+V2.7.1 Fix Bugs and code optimization
