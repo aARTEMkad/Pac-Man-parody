@@ -650,7 +650,9 @@ int main()
                     }
                     if (symbol == 13) {
                         // Exit
-                        if (result_menu == 0) {
+                        switch (result_menu)
+                        {
+                        case 0: // Exit
                             i = 1;
                             system("cls");
                             PAC_MAN();
@@ -662,9 +664,8 @@ int main()
                                     cout << "\t\t\t" << "    " << menu[i][0] << "    " << endl;
                                 }
                             }
-                        }
-                        // Color
-                        else if (result_menu == 1) {
+                            break;
+                        case 1: //Color
                             system("cls");
                             PAC_MAN();
                             for (int i = 7; i >= 0; i--) {
@@ -711,8 +712,10 @@ int main()
                                     }
                                 }
                                 if (symbol == 13) {
-                                    // Exit
-                                    if (result_menu == 0) {
+                                    switch (result_menu)
+                                    {
+                                    case 0:
+                                        // Exit
                                         d = 1;
                                         system("cls");
                                         PAC_MAN();
@@ -724,40 +727,41 @@ int main()
                                                 cout << "\t\t\t" << "    " << menu_1[i][0] << "    " << endl;
                                             }
                                         }
+                                        break;
+                                    case 1:
+                                        system("color 7"); // White
+                                        break;
+
+                                    case 2:
+                                        system("color 1"); // Blue
+                                        break;
+
+                                    case 3:
+                                        system("color 4");  // Red
+                                        break;
+
+                                    case 4:
+                                        system("color 8"); // Gray
+                                        break;
+
+                                    case 5:
+                                        system("color 2"); // Green
+                                        break;
+
+                                    case 6:
+                                        system("color 6"); // Yellow
+                                        break;
+
+                                    case 7:
+                                        system("color 3"); // Aqua
+                                        break;
                                     }
-                                    // White
-                                    else if (result_menu == 1) {
-                                        system("color 7");
-                                    }
-                                    // Blue
-                                    else if (result_menu == 2) {
-                                        system("color 1");
-                                    }
-                                    // Red
-                                    else if (result_menu == 3) {
-                                        system("color 4");
-                                    }
-                                    // Gray
-                                    else if (result_menu == 4) {
-                                        system("color 8");
-                                    }
-                                    // Green
-                                    else if (result_menu == 5) {
-                                        system("color 2");
-                                    }
-                                    // Yellow
-                                    else if (result_menu == 6) {
-                                        system("color 6");
-                                    }
-                                    // Aqua
-                                    else if (result_menu == 7) {
-                                        system("color 3");
-                                    }
+
+
                                 }
                             }
-                        }
-                        // Value points
-                        else if (result_menu == 2) {
+                            break;
+                        case 2:    // Value points
                             for (int i = 0; i < 17; i++) {
                                 for (int d = 0; d < 20; d++) {
                                     if (arr[i][d] == '+') {
@@ -793,17 +797,12 @@ int main()
                                 }
                             }
                         }
-
                     }
                 }
             }
             // Exit
             else if (result_menu == 0) {
                 return 0;
-            }
-            // Problem
-            else {
-                cout << "\nError\n";
             }
         }
 
